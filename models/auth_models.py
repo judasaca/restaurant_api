@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr, field_validator
 
-from utils import validate_password
+from utils.validation_utils import validate_password
 
 
 class UserSignUp(BaseModel):
