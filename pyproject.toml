@@ -11,13 +11,13 @@ mypy = "^1.10.0"
 black = "^24.4.2"
 fastapi = "^0.111.0"
 pydantic = "^2.7.2"
+motor = "^3.4.0"
+pydantic-settings = "^2.2.1"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[[tool.mypy.overrides]]
-module = ["fastapi", "pydantic"]
-ignore_missing_imports = true
+
 
