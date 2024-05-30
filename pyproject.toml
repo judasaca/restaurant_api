@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "restaurant-api"
+version = "0.1.0"
+description = ""
+authors = ["Juan David Salamanca <salamancajd14@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+mypy = "^1.10.0"
+black = "^24.4.2"
+fastapi = "^0.111.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[[tool.mypy.overrides]]
+module = ["fastapi"]
+ignore_missing_imports = true
+
