@@ -60,7 +60,11 @@ async def update_restaurant(
     return RestaurantFront.model_validate(updated_restaurant.model_dump())
 
 
-@RestaurantRouter.get("/public", response_model=GetRestaurantsResponse)
+@RestaurantRouter.get(
+    "/public",
+    response_model=GetRestaurantsResponse,
+    description="Get all the public restaurants created by any user. You do not need to be authenticated.",
+)
 async def get_all_public_restaurants(
     db_client: Annotated[AsyncIOMotorDatabase, Depends(get_db_client)],
     page: int = Query(0, description="Starts at 0", ge=0),
@@ -79,7 +83,11 @@ async def get_all_public_restaurants(
     }
 
 
-@RestaurantRouter.get("/private", response_model=GetRestaurantsResponse)
+@RestaurantRouter.get(
+    "/private",
+    response_model=GetRestaurantsResponse,
+    description="Get the private restaurants that you created. You need to be authenticated.",
+)
 async def get_all_private_restaurants(
     db_client: Annotated[AsyncIOMotorDatabase, Depends(get_db_client)],
     current_user: Annotated[UserInDB, Depends(get_current_user)],

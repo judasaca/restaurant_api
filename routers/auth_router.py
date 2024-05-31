@@ -44,4 +44,4 @@ async def login(
         raise InvalidLoginCredentialsException
 
     token = create_access_token(data=user)
-    return Token(access_token=token, token_type="bearer")
+    return Token(access_token=token)
