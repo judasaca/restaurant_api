@@ -19,3 +19,7 @@ class BaseModelInDB(BaseModel):
                 del data["_id"]
                 return data
         return data
+
+
+class RandomNumberResponse(BaseModel):
+    random_number: int
