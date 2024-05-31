@@ -12,7 +12,9 @@ from models.restaurant_models import (CreateRestaurantBody,
                                       RestaurantInDB, UpdateRestaurantBody)
 from services.restaurant_services import (add_restaurant,
                                           count_all_public_restaurants,
+                                          count_private_restaurants,
                                           find_all_public_restaurants,
+                                          find_private_restaurants,
                                           find_restaurant_by_id,
                                           modify_restaurant)
 
@@ -68,6 +70,28 @@ async def get_all_public_restaurants(
         page=page, page_size=page_size, db_client=db_client
     )
     total_restaurants = await count_all_public_restaurants(db_client)
+    return {
+        "restaurants": restaurants,
+        "current_page": page,
+        "page_size": page_size,
+        "total_restaurants": total_restaurants,
+        "available_pages": math.floor(total_restaurants / page_size) + 1,
+    }
+
+
+@RestaurantRouter.get("/private", response_model=GetRestaurantsResponse)
+async def get_all_private_restaurants(
+    db_client: Annotated[AsyncIOMotorDatabase, Depends(get_db_client)],
+    current_user: Annotated[UserInDB, Depends(get_current_user)],
+    page: int = Query(0, description="Starts at 0", ge=0),
+    page_size: int = Query(10, description="Default page size = 10", ge=1),
+) -> dict:
+    restaurants = await find_private_restaurants(
+        page=page, page_size=page_size, user_id=current_user.id, db_client=db_client
+    )
+    total_restaurants = await count_private_restaurants(
+        user_id=current_user.id, db_client=db_client
+    )
     return {
         "restaurants": restaurants,
         "current_page": page,

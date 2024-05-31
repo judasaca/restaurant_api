@@ -81,3 +81,30 @@ async def count_all_public_restaurants(db_client: AsyncIOMotorDatabase) -> int:
     restaurant_collection = db_client[RESTAURANT_COLLECTION_NAME]
     result = await restaurant_collection.count_documents({"is_public": True})
     return result
+
+
+async def find_private_restaurants(
+    page: int, page_size: int, user_id: str, db_client: AsyncIOMotorDatabase
+) -> List[RestaurantInDB]:
+    restaurant_collection = db_client[RESTAURANT_COLLECTION_NAME]
+    cursor = (
+        restaurant_collection.find({"created_by": user_id, "is_public": False})
+        .skip(page * page_size)
+        .limit(page_size)
+    )
+
+    restaurants = await cursor.to_list(page_size)
+    validated_restaurants = list(
+        map(lambda x: RestaurantInDB.model_validate(x), restaurants)
+    )
+    return validated_restaurants
+
+
+async def count_private_restaurants(
+    user_id: str, db_client: AsyncIOMotorDatabase
+) -> int:
+    restaurant_collection = db_client[RESTAURANT_COLLECTION_NAME]
+    result = await restaurant_collection.count_documents(
+        {"is_public": False, "created_by": user_id}
+    )
+    return result
