@@ -8,7 +8,18 @@ You need `python 3.12` or superior and you need to have installed `poetry`. You 
 pip install poetry
 ```
 
-If you want to have your local MongoDB database you will need to have installed `docker` and `docker compose`. If you are in windows you can install docker desktop [here](https://docs.docker.com/desktop/install/windows-install/) or if you are using linux you can install see the instructions for any linux distro [here](https://docs.docker.com/engine/install/).
+If you want to have your local MongoDB database you will need to have installed `docker` and `docker compose`. If you are in windows you can install docker desktop [here](https://docs.docker.com/desktop/install/windows-install/) or if you are using linux you can install see the instructions for any linux distro [here](https://docs.docker.com/engine/install/). You can use any mongo provider changing the environment variable.
+
+## Environment variables
+
+You need all the following environment variables inside a .env file:
+
+```env
+MONGO_URL=
+DATABASE_NAME=
+ALGORITHM=HS256
+SECRET_KEY=
+```
 
 ## Setup
 
