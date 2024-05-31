@@ -6,6 +6,7 @@ from fastapi import FastAPI
 
 from config import get_config
 from routers.auth_router import AuthRouter
+from routers.restaurant_routes import RestaurantRouter
 
 
 @asynccontextmanager
@@ -24,3 +25,4 @@ app = FastAPI(lifespan=lifespan)
 
 
 app.include_router(AuthRouter)
+app.include_router(RestaurantRouter)
