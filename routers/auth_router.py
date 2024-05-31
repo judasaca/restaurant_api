@@ -45,8 +45,3 @@ async def login(
 
     token = create_access_token(data=user)
     return Token(access_token=token, token_type="bearer")
-
-
-@AuthRouter.get("/prueba")
-async def prueba(current_user: UserInDB = Depends(get_current_user)) -> UserInDB:
-    return current_user
