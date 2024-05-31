@@ -25,7 +25,8 @@ If you want to use your local docker MongoDB database you should run `docker com
 To start the API you can run:
 
 ```bash
-fastpi dev main.py
+poetry shell # Activate virtual environment
+fastpi dev main.py # Run the api
 ```
 
 The default port is 8000. You can now go to the [local docs](localhost:8000/docs) and use the API.
