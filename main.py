@@ -6,6 +6,7 @@ from fastapi import FastAPI
 
 from config import get_config
 from routers.auth_router import AuthRouter
+from routers.restaurant_routes import RestaurantRouter
 
 
 @asynccontextmanager
@@ -14,8 +15,8 @@ async def lifespan(app_instance: FastAPI) -> AsyncGenerator:
     env = get_config()
     client = motor.motor_asyncio.AsyncIOMotorClient(env.MONGO_URL.get_secret_value())
     app_instance.state.db_client = client.get_database(env.DATABASE_NAME)
-    print(env, client)
     yield
+    client.close()
 
     # app ends
 
@@ -24,3 +25,4 @@ app = FastAPI(lifespan=lifespan)
 
 
 app.include_router(AuthRouter)
+app.include_router(RestaurantRouter)
