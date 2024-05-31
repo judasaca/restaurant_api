@@ -36,3 +36,14 @@ The default port is 8000. You can now go to the [local docs](localhost:8000/docs
 You can authorize any request made inside Swagger docs using the **Authorize** button at top right of the page. You need to provide the authorization token (JWT) and swagger docs will automatically attach this tokent to **Authorization** header in the next requests.
 
 You can generate JWT's using the endpoint `auth/login`. Remember that the token has a **lifespan of 20 min**.
+
+## Reset database
+
+> [!WARNING]
+> The following command will delete the database and populate with the data inside scripts/seed_data.py.
+
+You can populate the databse using:
+
+```bash
+python scripts/reset_database.py # Run this from the project root
+```
