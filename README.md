@@ -21,6 +21,8 @@ ALGORITHM=HS256
 SECRET_KEY=
 ```
 
+Given that we only want to use 1 algorithm it is only allowed to use HS256. The variables is added for completness.
+
 ## Setup
 
 After installing poetry you will be able to run the following commands:
