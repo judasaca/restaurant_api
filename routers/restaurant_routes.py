@@ -21,7 +21,9 @@ from services.restaurant_services import (add_restaurant,
 RestaurantRouter = APIRouter(prefix="/restaurants", tags=["Restaurant routes"])
 
 
-@RestaurantRouter.post("/", response_model=RestaurantFront)
+@RestaurantRouter.post(
+    "/", response_model=RestaurantFront, status_code=status.HTTP_201_CREATED
+)
 async def create_new_restaurant(
     restaurant_info: CreateRestaurantBody,
     current_user: Annotated[UserInDB, Depends(get_current_user)],
@@ -38,6 +40,7 @@ async def create_new_restaurant(
     "/{restaurant_id}",
     response_model=RestaurantFront,
     description="Partial update of restaurant by id. All fields in the body are optionals.",
+    status_code=status.HTTP_200_OK,
 )
 async def update_restaurant(
     restaurant_info: UpdateRestaurantBody,
