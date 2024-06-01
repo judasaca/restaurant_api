@@ -60,3 +60,11 @@ You can populate the databse using:
 ```bash
 python scripts/reset_database.py # Run this from the project root
 ```
+
+## Testing
+
+Before runing the tests you need to change the ENVIRONMENT variable to be 'testing'. You excecute the tests running in root folder:
+
+```bash
+pytest
+```
