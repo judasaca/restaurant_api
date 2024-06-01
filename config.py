@@ -8,8 +8,11 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Config(BaseSettings):
     MONGO_URL: SecretStr
     DATABASE_NAME: str
+    TESTING_DATABASE_NAME: str
     SECRET_KEY: SecretStr
     ALGORITHM: Literal["HS256"]
+    ENVIRONMENT: Literal["testing", "production"]
+
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
 
