@@ -68,3 +68,6 @@ Before runing the tests you need to change the ENVIRONMENT variable to be 'testi
 ```bash
 pytest
 ```
+Currently there are 10 available tests:
+![imagen](https://github.com/judasaca/restaurant_api/assets/48933463/6668bb3c-eab2-4526-a491-7bc7380a6416)
+
