@@ -1,6 +1,6 @@
 from typing import List, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from models.common_models import BaseModelInDB
 
@@ -20,6 +20,8 @@ class CreateRestaurantBody(BaseModel):
         description="Boolean value. If true, any user will be able to see the restaurant information. If false, only you will be able to see the restaurant information",
     )
 
+    model_config = ConfigDict(extra="forbid")
+
 
 class UpdateRestaurantBody(BaseModel):
     name: str | None = Field(None, description="Name of the restaurant")
@@ -38,6 +40,8 @@ class UpdateRestaurantBody(BaseModel):
         None,
         description="Boolean value. If true, any user will be able to see the restaurant information. If false, only you will be able to see the restaurant information",
     )
+
+    model_config = ConfigDict(extra="forbid")
 
 
 class RestaurantInDB(BaseModelInDB, CreateRestaurantBody):

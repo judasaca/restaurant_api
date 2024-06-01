@@ -19,8 +19,10 @@ MONGO_URL=
 DATABASE_NAME=
 ALGORITHM=HS256
 SECRET_KEY=
+ENVIRONMENT=
 ```
 
+ENVIRONMENT must be 'testing' or 'production'. Use 'testing' for running pytests or local api.
 Given that we only want to use 1 algorithm it is only allowed to use HS256. The variables is added for completness.
 
 ## Setup
@@ -31,7 +33,11 @@ After installing poetry you will be able to run the following commands:
 poetry install --no-root # Install the virtual environment
 ```
 
-If you want to use your local docker MongoDB database you should run `docker compose up` in other terminal.
+If you want to use your local docker MongoDB database you should run `docker compose up` in other terminal. Now you need to set the following environment variable:
+
+```env
+MONGO_URL=mongodb://root:testing_local_database@localhost:27017/
+```
 
 ## Start
 
@@ -60,3 +66,14 @@ You can populate the databse using:
 ```bash
 python scripts/reset_database.py # Run this from the project root
 ```
+
+## Testing
+
+Before runing the tests you need to change the ENVIRONMENT variable to be 'testing'. You excecute the tests running in root folder:
+
+```bash
+pytest
+```
+
+Currently there are 10 available tests:
+![imagen](https://github.com/judasaca/restaurant_api/assets/48933463/6668bb3c-eab2-4526-a491-7bc7380a6416)

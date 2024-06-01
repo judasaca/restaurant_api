@@ -17,7 +17,13 @@ async def lifespan(app_instance: FastAPI) -> AsyncGenerator:
     # App start
     env = get_config()
     client = motor.motor_asyncio.AsyncIOMotorClient(env.MONGO_URL.get_secret_value())
-    app_instance.state.db_client = client.get_database(env.DATABASE_NAME)
+    app_instance.state.db_client = client.get_database(
+        env.DATABASE_NAME
+        if env.ENVIRONMENT == "production"
+        else env.TESTING_DATABASE_NAME
+    )
+    if env.ENVIRONMENT == "testing":
+        app_instance.state.mongo_client = client
     yield
     client.close()
 

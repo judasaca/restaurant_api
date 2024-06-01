@@ -20,13 +20,26 @@ async def clear_database(
     await client.drop_database(test_database_name)
 
 
-async def main() -> None:
+async def main(
+    mongo_client: motor.motor_asyncio.AsyncIOMotorClient | None = None,
+    database_name: str | None = None,
+) -> None:
     env = get_config()
-    client = motor.motor_asyncio.AsyncIOMotorClient(env.MONGO_URL.get_secret_value())
+    DATABASE_NAME = database_name or env.DATABASE_NAME
 
-    await clear_database(client, env.DATABASE_NAME)
+    logging.info("Cleaning database " + DATABASE_NAME)
 
-    db_client = client.get_database(env.DATABASE_NAME)
+    client: motor.motor_asyncio.AsyncIOMotorClient
+    if mongo_client is None:
+        client = motor.motor_asyncio.AsyncIOMotorClient(
+            env.MONGO_URL.get_secret_value()
+        )
+    else:
+        client = mongo_client
+
+    await clear_database(client, DATABASE_NAME)
+
+    db_client = client.get_database(DATABASE_NAME)
 
     user_id = await create_user(user_data=SEED_FIRST_USER, db_client=db_client)
     for restaurant in SEED_RESTAURANTS:
@@ -34,7 +47,8 @@ async def main() -> None:
             restaurant_info=restaurant, user_id=user_id, db_client=db_client
         )
 
-    client.close()
+    if env.ENVIRONMENT != "testing":
+        client.close()
 
 
 if __name__ == "__main__":

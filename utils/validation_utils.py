@@ -24,7 +24,7 @@ def validate_password(password: str) -> None:
     # Check if the password contains at least one of the specified special characters
     if not re.search(r"[!@#?\]]", password):
         messages.append(
-            "Password must contain at least one of the folowing characters: '[!@$?]'"
+            "Password must contain at least one of the following characters: '[!@$?]'"
         )
     if len(messages) > 0:
         raise ValueError(
